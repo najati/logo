@@ -14,7 +14,7 @@ CC            = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefau
 CXX           = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++
 DEFINES       = -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -O2 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk -mmacosx-version-min=10.7 -Wall -W -fPIC $(DEFINES)
-CXXFLAGS      = -pipe -O2 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk -mmacosx-version-min=10.7 -Wall -W -fPIC $(DEFINES)
+CXXFLAGS      = -pipe `pkg-config --cflags ruby-2.2` -O2 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk -mmacosx-version-min=10.7 -Wall -W -fPIC $(DEFINES)
 INCPATH       = -I. -I/usr/local/Cellar/qt5/5.5.0/lib/QtWidgets.framework/Headers -I/usr/local/Cellar/qt5/5.5.0/lib/QtGui.framework/Headers -I/usr/local/Cellar/qt5/5.5.0/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/System/Library/Frameworks/OpenGL.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/System/Library/Frameworks/AGL.framework/Headers -I/usr/local/Cellar/qt5/5.5.0/mkspecs/macx-clang -F/usr/local/Cellar/qt5/5.5.0/lib
 QMAKE         = /usr/local/bin/qmake
 DEL_FILE      = rm -f
@@ -35,7 +35,7 @@ COMPRESS      = gzip -9f
 DISTNAME      = helloworld1.0.0
 DISTDIR = /Users/najati/src/mine/Logo/.tmp/helloworld1.0.0
 LINK          = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++
-LFLAGS        = -headerpad_max_install_names -Wl,-syslibroot,/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk -mmacosx-version-min=10.7
+LFLAGS        = -headerpad_max_install_names `pkg-config --variable=libdir ruby-2.2` `pkg-config --libs ruby-2.2` -Wl,-syslibroot,/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk -mmacosx-version-min=10.7
 LIBS          = $(SUBLIBS) -F/usr/local/Cellar/qt5/5.5.0/lib -framework QtWidgets -framework QtGui -framework QtCore -framework DiskArbitration -framework IOKit -framework OpenGL -framework AGL 
 AR            = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ar cq
 RANLIB        = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib -s
@@ -603,7 +603,9 @@ hello.o: src/hello.cpp /usr/local/Cellar/qt5/5.5.0/lib/QtCore.framework/Headers/
 		/usr/local/Cellar/qt5/5.5.0/lib/QtWidgets.framework/Headers/qpushbutton.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o hello.o src/hello.cpp
 
-main.o: src/main.cpp /usr/local/Cellar/qt5/5.5.0/lib/QtWidgets.framework/Headers/QApplication \
+main.o: src/main.cpp /usr/local/Cellar/qt5/5.5.0/lib/QtCore.framework/Headers/QDebug \
+		/usr/local/Cellar/qt5/5.5.0/lib/QtCore.framework/Headers/qdebug.h \
+		/usr/local/Cellar/qt5/5.5.0/lib/QtWidgets.framework/Headers/QApplication \
 		/usr/local/Cellar/qt5/5.5.0/lib/QtWidgets.framework/Headers/qapplication.h \
 		/usr/local/Cellar/qt5/5.5.0/lib/QtWidgets.framework/Headers/QWidget \
 		/usr/local/Cellar/qt5/5.5.0/lib/QtWidgets.framework/Headers/qwidget.h \

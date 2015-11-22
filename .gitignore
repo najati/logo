@@ -1,0 +1,10 @@
+
+.DS_Store
+
+.tmp
+.qmake.stash
+
+*.app
+*.o
+
+moc_*
