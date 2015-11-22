@@ -4,6 +4,8 @@
 .tmp
 .qmake.stash
 
+Makefile
+
 *.app
 *.o
 
