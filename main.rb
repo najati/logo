@@ -3,8 +3,8 @@ clear()
 
 margin = 10
 
-height = 500.0
-segments = 8
+height = 580.0
+segments = 9
 segment_size = height/segments
 
 (segments + 1).times do |i|
