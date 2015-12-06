@@ -20,11 +20,13 @@
 // syntax highlighting ?
 
 VALUE line(VALUE self, VALUE x1, VALUE y1, VALUE x2, VALUE y2) {
+	Q_UNUSED(self);
 	Drawing::Line(NUM2DBL(x1), NUM2DBL(y1), NUM2DBL(x2), NUM2DBL(y2));
 	return Qnil;
 }
 
 VALUE clear(VALUE self) {
+	Q_UNUSED(self);
 	Drawing::Clear();
 	return Qnil;
 }
@@ -41,7 +43,9 @@ int main(int argc, char **argv)
 	mainFile.open(QIODevice::ReadOnly | QIODevice::Text);
 	editor.setPlainText(mainFile.readAll());
 
-	MyPushButton helloButton("Run", editor);
+	Runner runner;
+
+	MyPushButton helloButton(runner, "Run", editor);
 	helloButton.resize(100, 30);
 	MyPushButton::connect(&helloButton, SIGNAL (clicked()), &helloButton, SLOT (handleClicked()));
 
