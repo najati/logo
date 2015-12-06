@@ -13,24 +13,9 @@
 #include <QGraphicsScene>
 #include <QGraphicsView>
 
-#include <ruby.h>
-
 // save on run
 // errors/output to console
 // syntax highlighting ?
-
-VALUE line(VALUE self, VALUE x1, VALUE y1, VALUE x2, VALUE y2) {
-	Q_UNUSED(self);
-	Drawing::Line(NUM2DBL(x1), NUM2DBL(y1), NUM2DBL(x2), NUM2DBL(y2));
-	return Qnil;
-}
-
-VALUE clear(VALUE self) {
-	Q_UNUSED(self);
-	Drawing::Clear();
-	return Qnil;
-}
-
 
 int main(int argc, char **argv)
 {
@@ -49,11 +34,16 @@ int main(int argc, char **argv)
 	helloButton.resize(100, 30);
 	MyPushButton::connect(&helloButton, SIGNAL (clicked()), &helloButton, SLOT (handleClicked()));
 
+	QPushButton stopButton("Stop");
+	stopButton.resize(100, 30);
+	QPushButton::connect(&stopButton, SIGNAL (clicked()), &runner, SLOT (Stop()));
+
 	QHBoxLayout mainLayout;
 
 	QVBoxLayout editorLayout;
 	editorLayout.addWidget(&editor);
 	editorLayout.addWidget(&helloButton);
+	editorLayout.addWidget(&stopButton);
 
 	QGraphicsScene scene(0, 0, 600, 600);
 
@@ -67,13 +57,6 @@ int main(int argc, char **argv)
 
 	window.setLayout(&mainLayout);
 	window.show();
-
-	ruby_init();
-	ruby_script("Logo embed");
-  // ruby_init_loadpath();
-
-	rb_define_global_function("line", reinterpret_cast<VALUE(*)(...)>(line), 4);
-	rb_define_global_function("clear", reinterpret_cast<VALUE(*)(...)>(clear), 0);
 
 	return app.exec();
 }

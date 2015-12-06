@@ -1,19 +1,31 @@
+#include <string>
+#include <thread>
+
 #include <QPushButton>
 #include <QTextEdit>
+#include <QTimer>
 
-#include <thread>
+#include <ruby.h>
 
 #include "drawing.h"
 
-class Runner {
+class Runner : public QObject {
+Q_OBJECT
+
 public:
-	void LoadScript(QString code);
+	Runner();
+	void LoadScript(std::string code);
 	void Start();
+
+public slots:
+	void Tick();
 	void Stop();
 
 private:
- 	QString code;
- 	const char *bytes;
+  QTimer timer;
+  VALUE obj;
+
+ 	std::string code;
 
  	std::thread scriptThread;
 };

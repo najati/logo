@@ -1,12 +1,30 @@
 
-margin = 10
+public
 
-height = 580.0
-segments = 9
-segment_size = height/segments
+def start
+  @margin = 10
 
-(segments + 1).times do |i|
-  line(margin, margin + i* segment_size, margin + i * segment_size, margin + height)
+  @height = 580.0
+  @growth = -1
+  @fact = 3
+
+  @segments = 12
 end
 
-clear()
+def update
+  @height += @growth * @fact
+
+  if @growth < 0 && @height <= 200
+    @growth = 1
+  elsif @growth > 0 && @height >= 580
+    @growth = -1
+  end
+end
+
+def draw
+  @segment_size = @height/@segments
+
+  (@segments + 1).times do |i|
+    line(@margin, @margin + i* @segment_size, @margin + i * @segment_size, @margin + @height)
+  end
+end
